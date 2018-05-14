@@ -5,7 +5,7 @@
 
 	<groupId>com.bnegrao</groupId>
 	<artifactId>NetTest</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1</version>
 	<packaging>jar</packaging>
 
 	<name>NetTest</name>
@@ -46,5 +46,17 @@
 		</plugins>
 	</build>
 
+	<repositories>
+    <repository>
+        <id>spring-releases</id>
+        <url>https://repo.spring.io/libs-release</url>
+    </repository>
+</repositories>
+<pluginRepositories>
+    <pluginRepository>
+        <id>spring-releases</id>
+        <url>https://repo.spring.io/libs-release</url>
+    </pluginRepository>
+</pluginRepositories>
 
 </project>

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,12 +26,17 @@ public class Controller {
 
 		URL url = new URL(proxyRequest.getUrl());
 		HttpURLConnection con = (HttpURLConnection) url.openConnection();
-		con.setRequestMethod("GET");
-		con.setRequestProperty("Accept-Charset", "utf8");
+		con.setRequestMethod(proxyRequest.getMethod());
 		con.setConnectTimeout(1000);
 		con.setReadTimeout(1000);
 		con.setInstanceFollowRedirects(false);
-
+		con.setRequestProperty("Accept-Charset", "utf8");
+		if (proxyRequest.getRequestHeaders() != null) {
+			for (String reqHeader: proxyRequest.getRequestHeaders().keySet()) {
+				con.addRequestProperty(reqHeader, proxyRequest.getRequestHeaders().get(reqHeader));
+			}	
+		}	
+		
 		ProxyResponse proxyResponse = new ProxyResponse();
 		proxyResponse.setResponseCode(con.getResponseCode());		
 		proxyResponse.setResponseHeaderFields(con.getHeaderFields());

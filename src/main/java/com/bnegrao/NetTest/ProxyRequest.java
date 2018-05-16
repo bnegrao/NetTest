@@ -10,6 +10,8 @@ public class ProxyRequest {
 	 */
 	private String url;
 	
+	private String method;
+	
 	private Map<String, String> params;
 	
 	private Map<String, String> requestHeaders;
@@ -37,6 +39,15 @@ public class ProxyRequest {
 	public void setRequestHeaders(Map<String, String> requestHeaders) {
 		this.requestHeaders = requestHeaders;
 	}
+
+	public String getMethod() {
+		return method;
+	}
+
+	public void setMethod(String method) {
+		this.method = method;
+	}
+
 	
 	
 }

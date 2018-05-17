@@ -43,9 +43,9 @@ public class Controller {
 		ProxyResponse proxyResponse = new ProxyResponse();		
 		
 		try {
-		} catch (Exception e) {
 			proxyResponse.setResponseCode(con.getResponseCode());
 			proxyResponse.setResponseMessage(con.getResponseMessage());
+		} catch (Exception e) {
 			e.printStackTrace();
 		}		
 		proxyResponse.setResponseHeaderFields(con.getHeaderFields());

@@ -1,1 +1,1 @@
-web: /usr/lib/jvm/java-8-oracle/jre/bin/java -Dhttp.proxyHost=proxy.globoi.com -Dhttp.proxyPort=3128 -Dhttp.nonProxyHosts=”localhost|glive.backstage.globoi.com|127.0.0.1”-jar ./NetTest-1.jar
+web: /usr/lib/jvm/java-8-oracle/jre/bin/java -Dhttp.proxyHost=proxy.globoi.com -Dhttp.proxyPort=3128 -Dhttp.nonProxyHosts=glive.backstage.globoi.com -jar ./NetTest-1.jar

@@ -6,6 +6,7 @@ import java.util.Map;
 
 public class ProxyResponse {
 	private int responseCode;
+	private String responseMessage;
 	private Map<String, List<String>> responseHeaderFields;
 	private String responseBody;
 	public int getResponseCode() {
@@ -28,6 +29,12 @@ public class ProxyResponse {
 	}
 	public void setResponseBody(String responseBody) {
 		this.responseBody = responseBody;
+	}
+	public String getResponseMessage() {
+		return responseMessage;
+	}
+	public void setResponseMessage(String responseMessage) {
+		this.responseMessage = responseMessage;
 	}	
 	
 }

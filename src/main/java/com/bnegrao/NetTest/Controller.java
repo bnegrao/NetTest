@@ -2,6 +2,7 @@ package com.bnegrao.NetTest;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -39,29 +40,38 @@ public class Controller {
 			}	
 		}	
 		
-		ProxyResponse proxyResponse = new ProxyResponse();
+		ProxyResponse proxyResponse = new ProxyResponse();		
+		
 		try {
-			proxyResponse.setResponseCode(con.getResponseCode());
 		} catch (Exception e) {
+			proxyResponse.setResponseCode(con.getResponseCode());
+			proxyResponse.setResponseMessage(con.getResponseMessage());
 			e.printStackTrace();
 		}		
 		proxyResponse.setResponseHeaderFields(con.getHeaderFields());
 
-		try {
-			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		InputStream responseInputStream = null;
+		
+		if (200 <= con.getResponseCode() && con.getResponseCode() <= 299) {
+			responseInputStream = con.getInputStream();
+		} else {
+			responseInputStream = con.getErrorStream();		
+		}		
+		
+		if (responseInputStream != null) {
+			BufferedReader in = new BufferedReader(new InputStreamReader(responseInputStream));
+			
 			String inputLine;
 			StringBuffer content = new StringBuffer();
 			while ((inputLine = in.readLine()) != null) {
 				content.append(inputLine);
 			}
+			proxyResponse.setResponseBody(content.toString());		
+			
 			in.close();
-			con.disconnect();
-			proxyResponse.setResponseBody(content.toString());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 
+		con.disconnect();
 		
 		return proxyResponse;
 	}

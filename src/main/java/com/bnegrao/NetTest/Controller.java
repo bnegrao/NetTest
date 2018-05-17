@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.util.Map;
 
@@ -38,20 +40,29 @@ public class Controller {
 		}	
 		
 		ProxyResponse proxyResponse = new ProxyResponse();
-		proxyResponse.setResponseCode(con.getResponseCode());		
+		try {
+			proxyResponse.setResponseCode(con.getResponseCode());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
 		proxyResponse.setResponseHeaderFields(con.getHeaderFields());
-		
-		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-		String inputLine;
-		StringBuffer content = new StringBuffer();
-		while ((inputLine = in.readLine()) != null) {
-			content.append(inputLine);
+
+		try {
+			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+			String inputLine;
+			StringBuffer content = new StringBuffer();
+			while ((inputLine = in.readLine()) != null) {
+				content.append(inputLine);
+			}
+			in.close();
+			con.disconnect();
+			proxyResponse.setResponseBody(content.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		in.close();
-		con.disconnect();
+
 		
-		
-		proxyResponse.setResponseBody(content.toString());
 		return proxyResponse;
 	}
 
